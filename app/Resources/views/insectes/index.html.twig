@@ -1,0 +1,35 @@
+ {% extends 'base.html.twig' %}
+ {% block body%}
+ <h2 class= "page-header"> liste </h2>
+ <table class="table table-striped">
+   <thead>
+     <tr>
+       <th>identifiant</th>
+       <th>Nom de l'insecte</th>
+       <th>famille </th>
+       <th>race </th>
+       <th>age</th>
+       <th>nourriture</th>
+
+       <th>actions</th>
+     </tr>
+   </thead>
+   <tbody>
+     {% for insecte in insectes %}
+     <tr>
+       <th scope="row">{{insecte.id}}</th>
+       <td>{{insecte.nomInsecte}}</td>
+       <td>{{insecte.age}}</td>
+       <td>{{insecte.race}}</td>
+       <td>{{insecte.nourriture}}</td>
+       <td>{{insecte.famille}}</td>
+       <td>
+         <a href="/insectes/details/{{insecte.id}}" class="btn btn-primary"> voir </a>
+          <a href="/insectes/edit/{{insecte.id}}" class="btn btn-success">modifier </a>
+           <a href="/insectes/details/{{insecte.id}}" class="btn btn-danger"> supprimer</a>
+       </td>
+     </tr>
+     {% endfor %}
+   </tbody>
+ </table>
+{% endblock %}
