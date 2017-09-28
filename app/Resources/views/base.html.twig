@@ -20,36 +20,35 @@
   <body>
 
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-      <a class="navbar-brand" href="/accueil">Acceuil</a>
+      <a class="navbar-brand" href="/">Acceuil</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
+          {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
           <li class="nav-item active">
-            <a class="nav-link" href="/">listes D'insectes</a>
+            <a class="nav-link" href="/insectes">listes D'insectes</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/insectes/create">ajoutez un insecte</a>
           </li>
+          <ul class="navbar-nav  mr-auto">
+          <li class="nav-item"><a class="nav-link" href="/profile">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |</a></li>
+          <li class="nav-item"><a class="nav-link" href="/logout">deconnexion</a></li>
+          {% else %}
+          <li class="nav-item " ><a class="nav-link" href="/login">connexion</a></li>
+          <li class="nav-item "><a class="nav-link" href="/register">inscription</a></li>
+          {% endif %}
 
+        </ul>
         </ul>
 
       </div>
     </nav>
 
     <div class="container">
-      <div>
-           {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-               {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-               <a href="{{ path('fos_user_security_logout') }}">
-                   {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-               </a>
-           {% else %}
-               <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-           {% endif %}
-       </div>
     <div class="row">
       <div class="col-md-12">
         {% block body %}{% endblock %}

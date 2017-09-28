@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="insecte")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\insecteRepository")
  */
-class insecte
+class insecte extends BaseUser
 {
     /**
      * @ORM\Id
@@ -57,6 +57,11 @@ class insecte
      */
     private $famille;
 
+    public function __construct()
+    {
+        parent::__construct();
+        // your own logic
+    }
 
 
 

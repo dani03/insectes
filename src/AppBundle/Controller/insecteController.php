@@ -18,7 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class insecteController extends Controller
 {
       /**
-       * @Route("/", name="insecte_list")
+       * @Route("/insectes", name="insecte_list")
        */
       public function listAction()
       {
