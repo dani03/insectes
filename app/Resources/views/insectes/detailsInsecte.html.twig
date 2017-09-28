@@ -1,4 +1,12 @@
 {% extends 'base.html.twig' %}
 {% block body%}
-details de l'insecte
+<hr>
+<a class="btn btn-info" href="/insectes"><span class="glyphicon glyphicon-chevron-left "></span> listes d'insectes</a>
+<hr>
+<h3 class= "page-header">{{insecte.nomInsecte}}</h3>
+<ul class="">
+  <li class="list-group-item">age: {{insecte.age}} an(s)</li>
+  <li class="list-group-item">famille: {{insecte.famille}}</li>
+  <li class="list-group-item"> nourriture: {{insecte.nourriture}}</li>
+</ul>
 {% endblock %}

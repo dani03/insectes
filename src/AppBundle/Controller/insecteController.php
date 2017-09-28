@@ -43,7 +43,7 @@ class insecteController extends Controller
         $insecte = new insecte;
 
       $form = $this->createFormBuilder($insecte)
-             // ->add('category')
+
              ->add('nomInsecte', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:20px')))
              ->add('age', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:20px')))
              ->add('race', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:20px')))
@@ -52,6 +52,8 @@ class insecteController extends Controller
              ->add('save', SubmitType::class, array('label' => 'ajouter insecte', 'attr' => array('class' =>'btn btn-info', 'style' => 'margin-bottom:20px')))
 
              ->getForm();
+             $form->handleRequest($request);
+
              if($form->isSubmitted() && $form->isValid()){
 
                $nomInsecte = $form['nomInsecte']->getData();
@@ -85,9 +87,62 @@ class insecteController extends Controller
       /**
        * @Route("/insectes/edit/{id}", name="insecte_edit")
        */
-      public function editAction(Request $request)
+      public function editAction( $id,Request $request)
       {
-          return $this->render('insectes/editInsecte.html.twig');
+        $insecte =$this->getDoctrine()
+                  ->getRepository('AppBundle:insecte')
+                  ->find($id);
+
+                  $insecte->setNomInsecte($insecte->getNomInsecte());
+                  $insecte->setAge($insecte->getAge());
+                  $insecte->setRace($insecte->getRace());
+                  $insecte->setNourriture($insecte->getNourriture());
+                  $insecte->setFamille($insecte->getFamille());
+
+
+                    $form = $this->createFormBuilder($insecte)
+
+                       ->add('nomInsecte', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:20px')))
+                       ->add('age', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:20px')))
+                       ->add('race', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:20px')))
+                       ->add('nourriture', TextType::class, array('attr' => array('class' =>'form-control', 'style' => 'margin-bottom:20px')))
+                       ->add('famille', TextareaType::class, array('attr' => array('class' =>'form-control', 'style' => 'margin-bottom:20px')))
+                       ->add('save', SubmitType::class, array('label' => 'modif\' insecte', 'attr' => array('class' =>'btn btn-info', 'style' => 'margin-bottom:20px')))
+
+                       ->getForm();
+                       $form->handleRequest($request);
+
+                       if($form->isSubmitted() && $form->isValid()){
+
+                         $nomInsecte = $form['nomInsecte']->getData();
+                         $age= $form['age']->getData();
+                          $race = $form['race']->getData();
+                          $nourriture = $form['nourriture']->getData();
+                          $famille = $form['famille']->getData();
+
+                            $em =$this->getDoctrine()->getManager();
+                            $insecte =$em->getRepository('AppBundle:insecte')->find($id);
+
+                          $insecte->setNomInsecte($nomInsecte);
+                          $insecte->setAge($age);
+                          $insecte->setRace($race);
+                          $insecte->setNourriture($nourriture);
+                          $insecte->setFamille($famille);
+
+                          $em->flush();
+                          $this->addFlash(
+                            'notice',
+                            'modification d\'insecte reussi'
+                          );
+                          return $this->redirectToRoute('insecte_list');
+                       }
+
+              return $this->render('insectes/editInsecte.html.twig', array(
+
+           'insecte' => $insecte,
+           'form' => $form->createView()
+
+          ));
       }
 
       /**
@@ -95,7 +150,31 @@ class insecteController extends Controller
        */
       public function detailsAction($id)
       {
-          return $this->render('insectes/detailsInsecte.html.twig');
+        $insecte =$this->getDoctrine()
+                  ->getRepository('AppBundle:insecte')
+                  ->find($id);
+                  return $this->render('insectes/detailsInsecte.html.twig', array(
+
+               'insecte' => $insecte
+
+          ));
+      }
+
+      /**
+       * @Route("/insectes/delete/{id}", name="insecte_delete")
+       */
+      public function deleteAction($id)
+      {
+        $em =$this->getDoctrine()->getManager();
+        $insecte = $em->getRepository('AppBundle:insecte')->find($id);
+
+        $em->remove($insecte);
+        $em->flush();
+        $this->addFlash(
+          'notice',
+          'suppression de l\'insecte'
+        );
+        return $this->redirectToRoute('insecte_list');
       }
 
 }

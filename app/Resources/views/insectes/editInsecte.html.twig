@@ -1,5 +1,8 @@
-ici on modifie notre insecte
+
 {% extends 'base.html.twig' %}
 {% block body%}
-ici on modifie l'insecte
+<h2 class="page-header">modifier l'insecte</h2>
+    {{form_start(form)}}
+    {{form_widget(form)}}
+    {{form_end(form)}}
 {% endblock %}

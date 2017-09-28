@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,16 +10,14 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="insecte")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\insecteRepository")
  */
-class insecte extends BaseUser
+class insecte
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
-
-
+    private $id;
 
     /**
      * @var string
@@ -56,13 +53,6 @@ class insecte extends BaseUser
      * @ORM\Column(name="famille", type="string", length=255)
      */
     private $famille;
-
-    public function __construct()
-    {
-        parent::__construct();
-        // your own logic
-    }
-
 
 
     /**

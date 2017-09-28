@@ -6,10 +6,10 @@
      <tr>
        <th>identifiant</th>
        <th>Nom de l'insecte</th>
-       <th>famille </th>
+       <th>age(ans) </th>
        <th>race </th>
-       <th>age</th>
        <th>nourriture</th>
+       <th>famille</th>
 
        <th>actions</th>
      </tr>
@@ -26,7 +26,7 @@
        <td>
          <a href="/insectes/details/{{insecte.id}}" class="btn btn-primary"> voir </a>
           <a href="/insectes/edit/{{insecte.id}}" class="btn btn-success">modifier </a>
-           <a href="/insectes/details/{{insecte.id}}" class="btn btn-danger"> supprimer</a>
+           <a href="/insectes/delete/{{insecte.id}}" class="btn btn-danger"> supprimer</a>
        </td>
      </tr>
      {% endfor %}
